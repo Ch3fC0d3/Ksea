@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KSEA NFT</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'">
+  <meta http-equiv="Permissions-Policy" content="accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), autoplay=(), camera=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), microphone=(), midi=(), payment=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    #defaultCanvas0 {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+    iframe {
+      border: none;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <!-- Patch p5.js to disable device sensors before loading the library -->
+  <script>
+    // Create a patch for p5.js to disable device sensors
+    window._disableP5Sensors = true;
+    
+    // Override deviceorientation and devicemotion event listeners
+    if (typeof window.DeviceOrientationEvent !== 'undefined') {
+      window.DeviceOrientationEvent = function() {};
+      window.DeviceOrientationEvent.requestPermission = function() {
+        return new Promise((resolve) => resolve('denied'));
+      };
+    }
+    
+    if (typeof window.DeviceMotionEvent !== 'undefined') {
+      window.DeviceMotionEvent = function() {};
+      window.DeviceMotionEvent.requestPermission = function() {
+        return new Promise((resolve) => resolve('denied'));
+      };
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js" integrity="sha512-N4kV7GkNv7QR7RX9YF/olywyIgIwNvfEe2nZtfyj73HdjCUkAfOBDbcuJ/cTaN04JKRnw1YG1wnUyNKMsNgg3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    // Default parameter values
+    let numFish = 8;
+    let numBubbles = 10;
+    let backgroundVisibility = 5;
+
+    // Initialize parameters - using a safer approach
+    const safeParams = {
+      _params: {},
+      params: function(defs) {
+        this.definitions = defs;
+        defs.forEach(def => {
+          if (def.type === "number") {
+            this._params[def.id] = (def.options.min + def.options.max) / 2;
+          }
+        });
+        // Update variables with parameter values
+        numFish = this._params["num_fish"] || 8;
+        numBubbles = this._params["num_bubbles"] || 10;
+        backgroundVisibility = this._params["background_visibility"] || 5;
+      },
+      getParam: function(id) {
+        return this._params[id];
+      },
+      definitions: []
+    };
+    
+    // Assign to window.$fx in a safer way
+    try {
+      window.$fx = safeParams;
+    } catch (e) {
+      console.log('Using fallback parameter system');
+    }
+
+    // Set up parameters
+    window.$fx.params([
+      {
+        id: "num_fish",
+        name: "Number of Fish",
+        type: "number",
+        options: {
+          min: 5,
+          max: 15,
+          step: 1
+        }
+      },
+      {
+        id: "num_bubbles",
+        name: "Number of Bubbles",
+        type: "number",
+        options: {
+          min: 5,
+          max: 20,
+          step: 1
+        }
+      },
+      {
+        id: "background_visibility",
+        name: "Background Visibility",
+        type: "number",
+        options: {
+          min: 0,
+          max: 9,
+          step: 1
+        }
+      }
+    ]);
+
+    let fishes = [];
+    let bubbles = [];  
+
+    // Klimt-inspired metallic color palette
+    const goldColors = [
+      '#B8860B',  // Byzantine gold
+      '#CFB53B',  // Antique gold
+      '#D4AF37',  // Metallic gold
+      '#E6BE8A',  // Royal gold
+      '#B87333',  // Copper
+      '#CD7F32',  // Bronze
+      '#996515',  // Deep gold
+      '#800020',  // Rich burgundy gold
+      '#DAA520',  // Golden rod
+      '#8B4513',  // Dark copper
+      '#FFD700',  // Pure gold
+      '#C19A6B',  // Antique bronze
+    ];
+
+    // Klimt pattern colors for accents
+    const klimtAccentColors = [
+      '#000000',  // Deep black for contrast
+      '#4A0404',  // Deep burgundy
+      '#2C1810',  // Dark brown
+      '#1E1E1E',  // Soft black
+      '#800020',  // Burgundy
+      '#4B0082',  // Indigo
+    ];
+
+    class Fish {
+      constructor(startX, startY, size) {
+        this.position = createVector(startX, startY);
+        this.size = size;
+        this.tailSpeed = random(0.05, 0.1);
+        this.tailAngle = 0;
+        this.velocity = p5.Vector.random2D().mult(random(0.2, 0.5));
+        
+        // Generate brighter colors
+        let hue = random(360);
+        let saturation = random(70, 100);
+        let brightness = random(70, 100);
+        colorMode(HSB, 360, 100, 100, 255);
+        this.color = color(hue, saturation, brightness);
+        colorMode(RGB, 255, 255, 255, 255);
+        
+        // Klimt-style decorative patterns
+        this.patternColor = color(random(goldColors));
+      }
+      
+      update() {
+        // Simple movement with slight noise
+        this.position.add(this.velocity);
+        this.tailAngle = sin(frameCount * this.tailSpeed) * 0.3;
+        
+        // Bounce off edges
+        if (this.position.x < 0 || this.position.x > width) this.velocity.x *= -1;
+        if (this.position.y < 0 || this.position.y > height) this.velocity.y *= -1;
+      }
+      
+      display() {
+        push();
+        translate(this.position.x, this.position.y);
+        
+        // Rotate in direction of movement
+        let angle = atan2(this.velocity.y, this.velocity.x);
+        rotate(angle);
+        
+        // Fish body
+        fill(this.color);
+        ellipse(0, 0, this.size, this.size * 0.6);
+        
+        // Tail
+        push();
+        rotate(this.tailAngle);
+        triangle(
+          -this.size/2, 0,
+          -this.size, -this.size/3,
+          -this.size, this.size/3
+        );
+        pop();
+        
+        // Eye
+        fill(255);
+        ellipse(this.size/4, -this.size/8, this.size/6, this.size/6);
+        fill(0);
+        ellipse(this.size/4, -this.size/8, this.size/12, this.size/12);
+        
+        // Klimt-style pattern
+        fill(this.patternColor);
+        for (let i = 0; i < 5; i++) {
+          let x = random(-this.size/3, this.size/3);
+          let y = random(-this.size/4, this.size/4);
+          let spotSize = random(this.size/10, this.size/6);
+          ellipse(x, y, spotSize, spotSize);
+        }
+        
+        pop();
+      }
+    }
+
+    class Bubble {
+      constructor() {
+        this.reset();
+      }
+      
+      reset() {
+        this.x = random(width);
+        this.y = height + random(20, 50);
+        this.size = random(5, 15);
+        this.speed = random(1, 3);
+        this.wobble = random(0.1, 0.3);
+        this.wobbleSpeed = random(0.02, 0.05);
+        this.opacity = random(150, 200);
+      }
+      
+      update() {
+        this.y -= this.speed;
+        this.x += sin(frameCount * this.wobbleSpeed) * this.wobble;
+        
+        if (this.y < -this.size) {
+          this.reset();
+        }
+      }
+      
+      display() {
+        push();
+        noFill();
+        stroke(255, 255, 255, this.opacity);
+        strokeWeight(1.5);
+        ellipse(this.x, this.y, this.size);
+        
+        // Highlight
+        stroke(255, 255, 255, this.opacity * 0.7);
+        arc(this.x, this.y, this.size * 0.7, this.size * 0.7, PI * 0.75, PI * 1.5);
+        pop();
+      }
+    }
+
+    function setup() {
+      // Completely disable p5's device orientation and motion features
+      if (typeof window.p5 !== 'undefined') {
+        // Override p5's deviceOrientation methods
+        window.p5.prototype._handleMotionEvent = function() {};
+        window.p5.prototype.deviceOrientation = undefined;
+        window.p5.prototype.deviceMoved = function() {};
+        window.p5.prototype.deviceTurned = function() {};
+        window.p5.prototype.deviceShaken = function() {};
+        
+        // Disable accelerometer
+        if (window.p5.prototype.accelerationX) {
+          Object.defineProperty(window.p5.prototype, 'accelerationX', { get: function() { return 0; } });
+          Object.defineProperty(window.p5.prototype, 'accelerationY', { get: function() { return 0; } });
+          Object.defineProperty(window.p5.prototype, 'accelerationZ', { get: function() { return 0; } });
+        }
+      }
+      
+      createCanvas(windowWidth, windowHeight);
+      
+      // Create fish
+      for (let i = 0; i < numFish; i++) {
+        let size = random(30, 70);
+        fishes.push(new Fish(random(width), random(height), size));
+      }
+      
+      // Create bubbles
+      for (let i = 0; i < numBubbles; i++) {
+        bubbles.push(new Bubble());
+      }
+    }
+
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+
+    function draw() {
+      // Background with adjustable visibility
+      background(10, 20, 50, 255 - backgroundVisibility * 20);
+      
+      // Update and display bubbles
+      for (let bubble of bubbles) {
+        bubble.update();
+        bubble.display();
+      }
+      
+      // Update and display fish
+      for (let fish of fishes) {
+        fish.update();
+        fish.display();
+      }
+    }
+  </script>
+</body>
+</html>

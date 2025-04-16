@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+  <!-- Background -->
+  <rect width="500" height="500" fill="#1a1a2e" />
+  
+  <!-- Outer circle -->
+  <circle cx="250" cy="250" r="200" fill="#0f3460" />
+  
+  <!-- Star shape -->
+  <polygon points="250,50 280,170 400,170 300,240 340,370 250,290 160,370 200,240 100,170 220,170" fill="#e94560" />
+  
+  <!-- Inner circle -->
+  <circle cx="250" cy="250" r="60" fill="#16213e" stroke="#e94560" stroke-width="8" />
+  
+  <!-- Text -->
+  <text x="250" y="265" font-family="Arial" font-size="30" fill="white" text-anchor="middle" font-weight="bold">NFT #1</text>
+</svg>
