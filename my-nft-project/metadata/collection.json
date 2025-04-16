@@ -1,0 +1,8 @@
+{
+  "name": "Geometric Cosmos",
+  "description": "A collection of geometric art pieces inspired by cosmic elements and mathematical patterns. Each piece combines simple shapes with vibrant colors to create unique visual experiences.",
+  "image": "ipfs://QmNft1/images/collection.svg",
+  "external_link": "https://geometriccosmos.example",
+  "seller_fee_basis_points": 250,
+  "fee_recipient": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+}

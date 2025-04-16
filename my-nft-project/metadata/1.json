@@ -1,0 +1,27 @@
+{
+  "name": "Cosmic Star #1",
+  "description": "A geometric cosmic star pattern with vibrant colors on a dark background. Part of the Geometric Cosmos NFT collection.",
+  "image": "ipfs://QmNft1/images/nft1.svg",
+  "attributes": [
+    {
+      "trait_type": "Background", 
+      "value": "Deep Space"
+    },
+    {
+      "trait_type": "Shape", 
+      "value": "Star"
+    },
+    {
+      "trait_type": "Color Scheme", 
+      "value": "Red & Blue"
+    },
+    {
+      "trait_type": "Series", 
+      "value": "Geometric Cosmos"
+    },
+    {
+      "trait_type": "Rarity", 
+      "value": "Common"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Pyramid Vision #3",
+  "description": "A minimalist pyramid design with a watchful eye. Part of the Geometric Cosmos NFT collection.",
+  "image": "ipfs://QmNft1/images/nft3.svg",
+  "attributes": [
+    {
+      "trait_type": "Background", 
+      "value": "Charcoal"
+    },
+    {
+      "trait_type": "Shape", 
+      "value": "Triangle & Circle"
+    },
+    {
+      "trait_type": "Color Scheme", 
+      "value": "Teal & White"
+    },
+    {
+      "trait_type": "Series", 
+      "value": "Geometric Cosmos"
+    },
+    {
+      "trait_type": "Rarity", 
+      "value": "Rare"
+    }
+  ]
+}

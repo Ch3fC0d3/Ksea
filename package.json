@@ -1,0 +1,13 @@
+{
+  "name": "ethereum-block-info",
+  "version": "1.0.0",
+  "description": "Fetch latest block information from Arbitrum One",
+  "main": "getBlock.js",
+  "type": "module",
+  "scripts": {
+    "start": "node getBlock.js"
+  },
+  "dependencies": {
+    "ethers": "^6.7.1"
+  }
+}

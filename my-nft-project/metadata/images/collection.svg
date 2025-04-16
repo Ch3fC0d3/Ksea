@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="350" height="350" viewBox="0 0 350 350">
+  <rect width="100%" height="100%" fill="#0a0a23" />
+  <circle cx="175" cy="175" r="150" fill="#1b1b32" />
+  <circle cx="175" cy="175" r="120" fill="#2a2a5a" />
+  <circle cx="175" cy="175" r="90" fill="#3b3b7e" />
+  
+  <!-- Star 1 -->
+  <polygon points="175,50 190,95 240,95 200,125 215,170 175,145 135,170 150,125 110,95 160,95" fill="#d0d0ff" />
+  
+  <!-- Star 2 -->
+  <polygon points="80,175 100,200 140,200 110,220 120,260 80,235 40,260 50,220 20,200 60,200" fill="#5c5cff" transform="scale(0.6) translate(100, 100)" />
+  
+  <!-- Star 3 -->
+  <polygon points="270,175 290,200 330,200 300,220 310,260 270,235 230,260 240,220 210,200 250,200" fill="#5c5cff" transform="scale(0.6) translate(100, 100)" />
+  
+  <!-- Geometric shapes -->
+  <rect x="155" y="155" width="40" height="40" fill="#00b4d8" transform="rotate(45, 175, 175)" />
+  <polygon points="175,175 195,205 155,205" fill="#ff5a5f" transform="translate(0, -30)" />
+  
+  <text x="175" y="250" font-family="Arial" font-size="24" fill="white" text-anchor="middle">Geometric Cosmos</text>
+  <text x="175" y="280" font-family="Arial" font-size="16" fill="#aaaaff" text-anchor="middle">NFT Collection</text>
+</svg>

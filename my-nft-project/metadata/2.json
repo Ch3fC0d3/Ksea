@@ -1,0 +1,27 @@
+{
+  "name": "Geometric Balance #2",
+  "description": "A balanced composition featuring a square and circle in harmony. Part of the Geometric Cosmos NFT collection.",
+  "image": "ipfs://QmNft1/images/nft2.svg",
+  "attributes": [
+    {
+      "trait_type": "Background", 
+      "value": "Dark Gray"
+    },
+    {
+      "trait_type": "Shape", 
+      "value": "Square & Circle"
+    },
+    {
+      "trait_type": "Color Scheme", 
+      "value": "Purple & Green"
+    },
+    {
+      "trait_type": "Series", 
+      "value": "Geometric Cosmos"
+    },
+    {
+      "trait_type": "Rarity", 
+      "value": "Uncommon"
+    }
+  ]
+}
