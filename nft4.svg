@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#0a1a2e" />
+  
+  <!-- Bubbles -->
+  <circle cx="50" cy="100" r="8" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" />
+  <circle cx="120" cy="80" r="5" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
+  <circle cx="200" cy="50" r="10" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" />
+  <circle cx="280" cy="120" r="7" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" />
+  <circle cx="350" cy="70" r="6" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
+  <circle cx="70" cy="200" r="9" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" />
+  <circle cx="180" cy="300" r="7" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
+  <circle cx="300" cy="250" r="8" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" />
+  <circle cx="250" cy="350" r="6" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" />
+  
+  <!-- Klimt-inspired Fish 1 -->
+  <g transform="translate(150, 150) rotate(30)">
+    <!-- Fish body -->
+    <ellipse cx="0" cy="0" rx="60" ry="35" fill="#B8860B" />
+    
+    <!-- Fish tail -->
+    <path d="M-60,0 L-100,-30 L-100,30 Z" fill="#DAA520" />
+    
+    <!-- Fish eye -->
+    <circle cx="40" cy="-10" r="8" fill="white" />
+    <circle cx="40" cy="-10" r="4" fill="black" />
+    
+    <!-- Klimt-style patterns -->
+    <circle cx="-20" cy="10" r="10" fill="#D4AF37" />
+    <circle cx="10" cy="-15" r="8" fill="#CFB53B" />
+    <circle cx="20" cy="15" r="12" fill="#996515" />
+    <circle cx="-30" cy="-10" r="7" fill="#CD7F32" />
+    <rect x="-5" y="-5" width="10" height="10" fill="#800020" />
+  </g>
+  
+  <!-- Klimt-inspired Fish 2 -->
+  <g transform="translate(250, 220) rotate(-20)">
+    <!-- Fish body -->
+    <ellipse cx="0" cy="0" rx="45" ry="25" fill="#CFB53B" />
+    
+    <!-- Fish tail -->
+    <path d="M-45,0 L-75,-20 L-75,20 Z" fill="#B8860B" />
+    
+    <!-- Fish eye -->
+    <circle cx="30" cy="-8" r="6" fill="white" />
+    <circle cx="30" cy="-8" r="3" fill="black" />
+    
+    <!-- Klimt-style patterns -->
+    <circle cx="-15" cy="8" r="8" fill="#D4AF37" />
+    <circle cx="8" cy="-10" r="6" fill="#B8860B" />
+    <circle cx="15" cy="10" r="9" fill="#996515" />
+    <circle cx="-20" cy="-8" r="5" fill="#CD7F32" />
+    <rect x="-4" y="-4" width="8" height="8" fill="#4A0404" />
+  </g>
+  
+  <!-- Klimt-inspired Fish 3 -->
+  <g transform="translate(100, 250) rotate(150)">
+    <!-- Fish body -->
+    <ellipse cx="0" cy="0" rx="50" ry="30" fill="#D4AF37" />
+    
+    <!-- Fish tail -->
+    <path d="M-50,0 L-85,-25 L-85,25 Z" fill="#CFB53B" />
+    
+    <!-- Fish eye -->
+    <circle cx="35" cy="-9" r="7" fill="white" />
+    <circle cx="35" cy="-9" r="3.5" fill="black" />
+    
+    <!-- Klimt-style patterns -->
+    <circle cx="-18" cy="9" r="9" fill="#B8860B" />
+    <circle cx="9" cy="-12" r="7" fill="#DAA520" />
+    <circle cx="18" cy="12" r="10" fill="#CD7F32" />
+    <circle cx="-25" cy="-9" r="6" fill="#996515" />
+    <rect x="-4.5" y="-4.5" width="9" height="9" fill="#2C1810" />
+  </g>
+  
+  <!-- Decorative Klimt-style elements -->
+  <circle cx="50" cy="50" r="15" fill="none" stroke="#FFD700" stroke-width="2" />
+  <circle cx="350" cy="350" r="20" fill="none" stroke="#DAA520" stroke-width="2" />
+  <rect x="320" y="30" width="30" height="30" fill="none" stroke="#B8860B" stroke-width="2" />
+  <rect x="30" cy="320" width="25" height="25" fill="none" stroke="#D4AF37" stroke-width="2" />
+  
+  <!-- Signature -->
+  <text x="20" y="380" font-family="Arial" font-size="12" fill="#DAA520">KSEA Klimt #4</text>
+</svg>
