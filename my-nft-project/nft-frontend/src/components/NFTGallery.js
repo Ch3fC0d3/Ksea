@@ -300,7 +300,7 @@ const NFTGallery = ({ contract, account, refreshTrigger = 0 }) => {
       </div>
       {usingMockData && (
         <div className="mock-data-notice">
-          <p>⚠️ Using demo data mode</p>
+          <p>⚠️ Using Solana Mock Data</p>
         </div>
       )}
       <div className="nft-grid">

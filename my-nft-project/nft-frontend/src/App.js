@@ -6,7 +6,8 @@ import ConnectWallet from './components/ConnectWallet';
 import NFTGallery from './components/NFTGallery';
 import MintNFT from './components/MintNFT';
 import NetworkGuide from './components/NetworkGuide';
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from './utils/constants';
+// Import contract configuration for Sepolia testnet
+import contractConfig from './contractConfig';
 import { ENABLE_MOCK_MODE, FORCE_MOCK_MODE, isMockOwner, MOCK_OWNER_ADDRESS } from './utils/mockData';
 
 function App() {
@@ -50,8 +51,8 @@ function App() {
             const network = await provider.getNetwork();
             setChainId(network.chainId);
             
-            // Check if we're on the correct network (Hardhat = 31337)
-            if (network.chainId !== 31337) {
+            // Check if we're on the correct network (Sepolia = 11155111 or 0xaa36a7 in hex)
+            if (network.chainId !== 11155111) {
               setNetworkError(true);
             } else {
               setNetworkError(false);
@@ -69,10 +70,10 @@ function App() {
             window.ethereum.on('chainChanged', (chainIdHex) => {
               const newChainId = parseInt(chainIdHex, 16);
               setChainId(newChainId);
-              setNetworkError(newChainId !== 31337);
+              setNetworkError(newChainId !== 11155111);
               
               // If we're on the correct network and have an account, reconnect
-              if (newChainId === 31337 && account) {
+              if (newChainId === 11155111 && account) {
                 reconnectContract(provider);
               }
             });
@@ -129,7 +130,7 @@ function App() {
   const reconnectContract = async (provider) => {
     try {
       const signer = provider.getSigner();
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+      const contract = new ethers.Contract(contractConfig.address, contractConfig.abi, signer);
       setSigner(signer);
       setContract(contract);
       
@@ -160,7 +161,7 @@ function App() {
     if (!provider) return;
     
     try {
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
+      const contract = new ethers.Contract(contractConfig.address, contractConfig.abi, provider);
       const contractOwner = await contract.owner();
       setIsOwner(address.toLowerCase() === contractOwner.toLowerCase());
     } catch (err) {
@@ -238,7 +239,7 @@ function App() {
         
         // Only create contract instance if on correct network
         if (network.chainId === 31337) {
-          const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+          const contract = new ethers.Contract(contractConfig.address, contractConfig.abi, signer);
           setContract(contract);
           
           // Check if the connected account is the contract owner
