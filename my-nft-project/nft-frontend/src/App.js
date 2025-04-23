@@ -298,12 +298,7 @@ function App() {
         </div>
       )}
       
-      {usingMockData && (
-        <div className="demo-mode-banner">
-          <p>🔍 Demo Mode: Using sample data for demonstration purposes</p>
-          <p className="demo-note">Blockchain connection not available or not required</p>
-        </div>
-      )}
+      {/* Demo banner removed as requested */}
 
       <main>
         {account ? (

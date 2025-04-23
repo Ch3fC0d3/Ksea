@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Ksea/static/css/main.71fa018a.css",
-    "main.js": "/Ksea/static/js/main.93285910.js",
+    "main.css": "/Ksea/static/css/main.658b9399.css",
+    "main.js": "/Ksea/static/js/main.7218775b.js",
     "index.html": "/Ksea/index.html",
-    "main.71fa018a.css.map": "/Ksea/static/css/main.71fa018a.css.map",
-    "main.93285910.js.map": "/Ksea/static/js/main.93285910.js.map"
+    "main.658b9399.css.map": "/Ksea/static/css/main.658b9399.css.map",
+    "main.7218775b.js.map": "/Ksea/static/js/main.7218775b.js.map"
   },
   "entrypoints": [
-    "static/css/main.71fa018a.css",
-    "static/js/main.93285910.js"
+    "static/css/main.658b9399.css",
+    "static/js/main.7218775b.js"
   ]
 }
