@@ -7,11 +7,19 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Set NODE_ENV to production if not set
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = 'production';
+}
+
 // Initialize Express app
 const app = express();
 
-// Use the PORT environment variable provided by the hosting platform, or default to 3000
-const PORT = process.env.PORT || 3000;
+// Use the PORT environment variable provided by the hosting platform, or default to 8080
+const PORT = process.env.PORT || 8080;
+
+console.log(`Starting server with NODE_ENV=${process.env.NODE_ENV} on PORT=${PORT}`);
+
 
 // Path to the built React app
 const buildPath = path.join(__dirname, 'my-nft-project', 'nft-frontend', 'build');
