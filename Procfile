@@ -1,1 +1,1 @@
-web: node ultra-basic-server.js
+web: node standalone-server.js
