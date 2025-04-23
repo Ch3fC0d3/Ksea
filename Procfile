@@ -1,1 +1,1 @@
-web: bash start.sh
+web: node minimal-server.js

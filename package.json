@@ -2,12 +2,12 @@
   "name": "ksea-nft-project",
   "version": "1.0.0",
   "description": "Geometric Cosmos NFT Gallery",
-  "main": "server.js",
+  "main": "minimal-server.js",
   "engines": {
     "node": "18.x"
   },
   "scripts": {
-    "start": "NODE_ENV=production node server.js",
+    "start": "node minimal-server.js",
     "build": "cd my-nft-project/nft-frontend && npm install && npm run build",
     "postinstall": "cd my-nft-project/nft-frontend && npm install"
   },
