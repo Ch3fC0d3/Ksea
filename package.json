@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Geometric Cosmos NFT Gallery",
   "main": "server.js",
-  "type": "module",
   "engines": {
     "node": "18.x"
   },

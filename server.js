@@ -1,53 +1,73 @@
-import express from 'express';
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
-
-// Get directory name in ESM
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Set NODE_ENV to production if not set
-if (!process.env.NODE_ENV) {
-  process.env.NODE_ENV = 'production';
-}
+// Simple Express server for Digital Ocean App Platform
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
 
 // Initialize Express app
 const app = express();
 
-// Use the PORT environment variable provided by the hosting platform, or default to 8080
+// Use PORT provided by Digital Ocean
 const PORT = process.env.PORT || 8080;
 
-console.log(`Starting server with NODE_ENV=${process.env.NODE_ENV} on PORT=${PORT}`);
+// Log startup information
+console.log('Starting server...');
+console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+console.log(`Port: ${PORT}`);
+console.log(`Current directory: ${process.cwd()}`);
 
+// List directory contents for debugging
+const dirContents = fs.readdirSync('.');
+console.log('Directory contents:', dirContents);
 
-// Path to the built React app
-const buildPath = path.join(__dirname, 'my-nft-project', 'nft-frontend', 'build');
-
-// Check if build directory exists
-if (!fs.existsSync(buildPath)) {
-  console.warn(`Warning: Build directory not found at ${buildPath}`);
-  console.log('Available directories:');
-  fs.readdirSync(__dirname).forEach(file => {
-    console.log(` - ${file} ${fs.statSync(path.join(__dirname, file)).isDirectory() ? '(directory)' : '(file)'}`);
-  });
+// Determine build path
+let buildPath;
+if (fs.existsSync(path.join(__dirname, 'my-nft-project', 'nft-frontend', 'build'))) {
+  buildPath = path.join(__dirname, 'my-nft-project', 'nft-frontend', 'build');
+  console.log(`Using build path: ${buildPath}`);
+} else if (fs.existsSync(path.join(__dirname, 'build'))) {
+  buildPath = path.join(__dirname, 'build');
+  console.log(`Using alternate build path: ${buildPath}`);
+} else {
+  console.log('No build directory found. Listing available directories:');
+  const findBuildDirs = (dir, depth = 0) => {
+    if (depth > 2) return; // Limit recursion depth
+    
+    try {
+      const items = fs.readdirSync(dir);
+      items.forEach(item => {
+        const itemPath = path.join(dir, item);
+        const stats = fs.statSync(itemPath);
+        if (stats.isDirectory()) {
+          console.log(`Directory: ${itemPath}`);
+          if (item === 'build') {
+            console.log(`Found potential build directory: ${itemPath}`);
+            buildPath = itemPath;
+          }
+          findBuildDirs(itemPath, depth + 1);
+        }
+      });
+    } catch (err) {
+      console.error(`Error reading directory ${dir}:`, err.message);
+    }
+  };
   
-  // Check if there's a build directory directly in the root
-  if (fs.existsSync(path.join(__dirname, 'build'))) {
-    console.log('Found build directory in root, using that instead');
-    buildPath = path.join(__dirname, 'build');
+  findBuildDirs(__dirname);
+  
+  if (!buildPath) {
+    buildPath = __dirname; // Fallback to current directory
+    console.log(`Fallback to current directory: ${buildPath}`);
   }
 }
 
-// Add health check endpoint
+// Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).send('OK');
 });
 
-// Serve static files from the React build directory
+// Serve static files
 app.use('/Ksea', express.static(buildPath));
 
-// For any other routes, redirect to the React app
+// Handle all routes
 app.get('/*', (req, res) => {
   try {
     if (req.path.startsWith('/Ksea')) {
@@ -55,59 +75,32 @@ app.get('/*', (req, res) => {
       if (fs.existsSync(indexPath)) {
         res.sendFile(indexPath);
       } else {
-        console.error(`Error: index.html not found at ${indexPath}`);
-        res.status(404).send('index.html not found');
+        console.error(`index.html not found at ${indexPath}`);
+        res.status(404).send(`index.html not found at ${indexPath}`);
       }
     } else {
       res.redirect('/Ksea');
     }
   } catch (error) {
-    console.error('Error handling request:', error);
-    res.status(500).send('Internal server error');
+    console.error('Request error:', error.message);
+    res.status(500).send('Server error: ' + error.message);
   }
 });
 
-// Error handling
-app.use((err, req, res, next) => {
-  console.error('Unhandled error:', err);
-  res.status(500).send('Something broke!');
-});
-
-// Start the server
+// Start server
 const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Access the site at http://localhost:${PORT}/Ksea`);
+  console.log(`Server running at http://0.0.0.0:${PORT}`);
 });
 
-// Handle server errors
+// Handle errors
 server.on('error', (error) => {
-  console.error('Server error:', error);
-  if (error.code === 'EADDRINUSE') {
-    console.error(`Port ${PORT} is already in use`);
-  }
+  console.error('Server error:', error.message);
+  process.exit(1);
 });
 
-// Handle process termination
-process.on('SIGTERM', () => {
-  console.log('SIGTERM received, shutting down gracefully');
-  server.close(() => {
-    console.log('Server closed');
-    process.exit(0);
-  });
-});
-
-process.on('SIGINT', () => {
-  console.log('SIGINT received, shutting down gracefully');
-  server.close(() => {
-    console.log('Server closed');
-    process.exit(0);
-  });
-});
-
-// Handle uncaught exceptions
+// Keep the process alive
 process.on('uncaughtException', (error) => {
-  console.error('Uncaught exception:', error);
-  server.close(() => {
-    process.exit(1);
-  });
+  console.error('Uncaught exception:', error.message);
+  console.error(error.stack);
 });
+
