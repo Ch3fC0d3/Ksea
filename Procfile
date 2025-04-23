@@ -1,1 +1,1 @@
-web: node minimal-server.js
+web: node ultra-basic-server.js
