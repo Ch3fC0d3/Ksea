@@ -1,11 +1,16 @@
 {
-  "name": "ethereum-block-info",
+  "name": "ksea-nft-project",
   "version": "1.0.0",
-  "description": "Fetch latest block information from Arbitrum One",
-  "main": "getBlock.js",
+  "description": "Geometric Cosmos NFT Gallery",
+  "main": "server.js",
   "type": "module",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
-    "start": "node getBlock.js"
+    "start": "node server.js",
+    "build": "cd my-nft-project/nft-frontend && npm install && npm run build",
+    "postinstall": "cd my-nft-project/nft-frontend && npm install"
   },
   "dependencies": {
     "ethers": "^6.7.1",

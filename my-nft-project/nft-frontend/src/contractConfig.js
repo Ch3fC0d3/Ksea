@@ -1,11 +1,11 @@
-// Contract configuration for Sepolia testnet
+// Contract configuration using environment variables
 const contractConfig = {
-  // This is a verified ERC721 NFT contract on Sepolia testnet
-  address: "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
+  // NFT contract address from environment variable or fallback to default
+  address: process.env.REACT_APP_CONTRACT_ADDRESS || "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
   network: {
-    chainId: "0xaa36a7", // Sepolia chain ID in hex
-    name: "Sepolia",
-    rpcUrl: "https://eth-sepolia.g.alchemy.com/v2/99QNzS2y8XCVUFzePPzgl5W5mwm-FnyW"
+    chainId: process.env.REACT_APP_CHAIN_ID || "0xaa36a7", // Sepolia chain ID in hex
+    name: process.env.REACT_APP_NETWORK_NAME || "Sepolia",
+    rpcUrl: process.env.REACT_APP_RPC_URL || "https://eth-sepolia.public.blastapi.io"
   },
   // Standard ERC721 ABI with mint and tokenURI functions
   abi: [
