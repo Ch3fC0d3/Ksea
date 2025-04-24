@@ -50,7 +50,19 @@ const server = http.createServer((req, res) => {
   }
   
   // Normalize URL path
-  let filePath = path.join(process.cwd(), req.url === '/' ? 'index.html' : req.url);
+  let urlPath = req.url;
+  
+  // Handle /Ksea/ path prefix
+  if (urlPath.startsWith('/Ksea/')) {
+    urlPath = urlPath.substring(5); // Remove /Ksea/ prefix
+  }
+  
+  // Default to index.html for root path
+  if (urlPath === '/' || urlPath === '') {
+    urlPath = '/index.html';
+  }
+  
+  let filePath = path.join(process.cwd(), urlPath);
   
   // Security check - prevent directory traversal
   if (!filePath.startsWith(process.cwd())) {
