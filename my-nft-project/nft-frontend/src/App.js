@@ -176,6 +176,24 @@ function App() {
     }
   };
 
+  // Disconnect wallet function
+  const disconnectWallet = () => {
+    // Reset all state variables related to wallet connection
+    setAccount('');
+    setSigner(null);
+    setContract(null);
+    setIsOwner(false);
+    setUsingMockData(false);
+    
+    // Show a notification to the user
+    setError('Wallet disconnected successfully');
+    
+    // Clear the error message after 3 seconds
+    setTimeout(() => {
+      setError('');
+    }, 3000);
+  };
+
   // Connect wallet function - specifically targeting MetaMask
   const connectWallet = async () => {
     // If FORCE_MOCK_MODE is enabled, automatically use mock data without MetaMask
@@ -285,6 +303,7 @@ function App() {
         <ConnectWallet 
           account={account} 
           connectWallet={connectWallet} 
+          disconnectWallet={disconnectWallet}
           loading={loading} 
         />
       </header>
